@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    public string promptMessage;
 
     public void BaseInteract()
     {
@@ -14,5 +13,13 @@ public abstract class Interactable : MonoBehaviour
     protected virtual void Interact()
     {
         
+    }
+
+    public void BasePoint(){
+        Point();
+    }
+
+    protected virtual void Point(){
+
     }
 }

@@ -19,6 +19,10 @@ public class PokerCard : Interactable
 
     protected override void Interact()
     {
+        
+    }
+
+    protected override void Point(){
         textMeshPro.text = pokerCardMessage;
         Vector3 originalPosition = new Vector3(-0.34f, 2.53f, -0.25f);
         textMeshPro.transform.position = originalPosition;
