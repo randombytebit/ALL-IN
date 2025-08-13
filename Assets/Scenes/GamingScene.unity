@@ -2162,6 +2162,7 @@ GameObject:
   - component: {fileID: 282643456}
   - component: {fileID: 282643457}
   - component: {fileID: 282643459}
+  - component: {fileID: 282643460}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2326,7 +2327,39 @@ MonoBehaviour:
   interactableMask:
     serializedVersion: 2
     m_Bits: 64
-  animationHelper: {fileID: 539732708}
+  interact: {fileID: -8213672049480099554, guid: aa5e26b581ee8744cb3b12e42c9c044a,
+    type: 3}
+--- !u!114 &282643460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282643449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: aa5e26b581ee8744cb3b12e42c9c044a,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: onFoot
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!64 &284051134
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4619,51 +4652,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6425060717771178906, guid: 6226f6ee982eb064da9944616679b253, type: 3}
---- !u!1 &539732707
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 539732709}
-  - component: {fileID: 539732708}
-  m_Layer: 0
-  m_Name: AnimationHelper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &539732708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539732707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d19d753f7c2a24410abe84a27367da27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
---- !u!4 &539732709
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539732707}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 726336204}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &542996047
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5610,6 +5598,51 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2178101080523485417, guid: 6226f6ee982eb064da9944616679b253, type: 3}
+--- !u!1 &655219870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 655219871}
+  - component: {fileID: 655219872}
+  m_Layer: 0
+  m_Name: PokerDeckManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &655219871
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655219870}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 726336204}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &655219872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655219870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b3924436d104043990b8eb8757d11f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pokerCardPrefab: {fileID: 0}
 --- !u!64 &655774952
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6389,7 +6422,8 @@ Transform:
   m_Children:
   - {fileID: 1746572423}
   - {fileID: 1568324498}
-  - {fileID: 539732709}
+  - {fileID: 1715691878}
+  - {fileID: 655219871}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!64 &728135601
@@ -7000,7 +7034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &795078673
 Transform:
   m_ObjectHideFlags: 0
@@ -7010,7 +7044,7 @@ Transform:
   m_GameObject: {fileID: 795078672}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -0.76, y: 2.228, z: 1.43}
+  m_LocalPosition: {x: -0.76, y: 2.228, z: 1.183}
   m_LocalScale: {x: 0.155, y: 0.29813534, z: 0.21554686}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7030,6 +7064,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1645183563}
   pokerCardMessage: Ranked
+  targetMenuState: 0
+  targetGameMode: 2
 --- !u!64 &795078675
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7143,7 +7179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &801704839
 Transform:
   m_ObjectHideFlags: 0
@@ -7153,7 +7189,7 @@ Transform:
   m_GameObject: {fileID: 801704838}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.76, y: 2.228, z: 0.93}
+  m_LocalPosition: {x: -0.76, y: 2.228, z: 0.683}
   m_LocalScale: {x: 0.155, y: 0.29813534, z: 0.21554686}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7173,6 +7209,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1645183563}
   pokerCardMessage: Casual
+  targetMenuState: 0
+  targetGameMode: 1
 --- !u!64 &801704841
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -24377,7 +24415,7 @@ GameObject:
   - component: {fileID: 1645183563}
   - component: {fileID: 1645183565}
   m_Layer: 0
-  m_Name: TMP - Start Game
+  m_Name: TMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24545,7 +24583,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1645183561}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f05151e7e07b7c1488c58d2b481c0449, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c6cd25b1865d4b7d98340453c1da9a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!64 &1646555119
@@ -25271,7 +25309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1712329647
 Transform:
   m_ObjectHideFlags: 0
@@ -25281,7 +25319,7 @@ Transform:
   m_GameObject: {fileID: 1712329646}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.76, y: 2.228, z: 1.93}
+  m_LocalPosition: {x: -0.76, y: 2.228, z: 1.683}
   m_LocalScale: {x: 0.155, y: 0.29813534, z: 0.21554686}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -25301,6 +25339,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1645183563}
   pokerCardMessage: Private Lobby
+  targetMenuState: 0
+  targetGameMode: 3
 --- !u!64 &1712329649
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25373,6 +25413,89 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329646}
   m_Mesh: {fileID: -462981019419857548, guid: 07e5f6dbcfddcbf439a536dfd70f7e89, type: 3}
+--- !u!1 &1715691877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1715691878}
+  - component: {fileID: 1715691882}
+  - component: {fileID: 1715691881}
+  - component: {fileID: 1715691880}
+  - component: {fileID: 1715691879}
+  m_Layer: 0
+  m_Name: GameModeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1715691878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715691877}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 726336204}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1715691879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715691877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65bfc5ad498240d59bf20a3a74ef7a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1715691880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715691877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b97c7c8c1a6d9434bb6418b92aa90381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1715691881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715691877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9e374a71df642948bc451a88a97e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1715691882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715691877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6eb6de9b3b1640f090c8443932da5c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &1715948379
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25571,6 +25694,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c692d7c10a9114c4a9d7ee5bcba663f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pokerCards: []
+  menuState: 0
 --- !u!64 &1746596286
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -26517,6 +26642,129 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 886369488125244915, guid: 6226f6ee982eb064da9944616679b253, type: 3}
+--- !u!1 &1914487407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1914487408}
+  - component: {fileID: 1914487412}
+  - component: {fileID: 1914487411}
+  - component: {fileID: 1914487410}
+  - component: {fileID: 1914487409}
+  m_Layer: 6
+  m_Name: Tutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1914487408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914487407}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: -0.76, y: 2.228, z: 2.183}
+  m_LocalScale: {x: 0.155, y: 0.29813534, z: 0.21554686}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2087494200}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 180}
+--- !u!114 &1914487409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914487407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a9976eeaa058d4da748aa5a453cffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMeshPro: {fileID: 1645183563}
+  pokerCardMessage: Tutorial
+  targetMenuState: 0
+  targetGameMode: 4
+--- !u!64 &1914487410
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914487407}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: 07e5f6dbcfddcbf439a536dfd70f7e89, type: 3}
+--- !u!23 &1914487411
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914487407}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 8802841842634563067, guid: 07e5f6dbcfddcbf439a536dfd70f7e89, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1914487412
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914487407}
+  m_Mesh: {fileID: -462981019419857548, guid: 07e5f6dbcfddcbf439a536dfd70f7e89, type: 3}
 --- !u!64 &1917028928
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -28121,10 +28369,11 @@ Transform:
   - {fileID: 6723618186567243944}
   - {fileID: 5465312923347266590}
   - {fileID: 4035765419629076551}
+  - {fileID: 7795977997454431576}
   - {fileID: 801704839}
   - {fileID: 795078673}
   - {fileID: 1712329647}
-  - {fileID: 7795977997454431576}
+  - {fileID: 1914487408}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!95 &2087494201
@@ -28591,6 +28840,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1645183563}
   pokerCardMessage: SETTINGS
+  targetMenuState: 5
+  targetGameMode: 0
 --- !u!1 &4585671122757371554 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c3a2ded1fc828d0489bfdebf481c61ab,
@@ -29070,6 +29321,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1645183563}
   pokerCardMessage: APPEARANCE
+  targetMenuState: 3
+  targetGameMode: 0
 --- !u!1 &7758058053586576160
 GameObject:
   m_ObjectHideFlags: 0
@@ -29205,6 +29458,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1645183563}
   pokerCardMessage: START GAME
+  targetMenuState: 1
+  targetGameMode: 0
 --- !u!1001 &8178439247655262727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29351,6 +29606,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1645183563}
   pokerCardMessage: LEADERBOARD
+  targetMenuState: 4
+  targetGameMode: 0
 --- !u!23 &8969987879868018231
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -29429,6 +29686,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1645183563}
   pokerCardMessage: QUIT
+  targetMenuState: 6
+  targetGameMode: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
