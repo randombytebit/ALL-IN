@@ -6,7 +6,30 @@ using System.Linq;
 public class ObjectPoolManager : MonoBehaviour
 {
     public static List<PooledObjectsInfo> ObjectPools = new List<PooledObjectsInfo>();
-    public static GameObject SpawnPooledObject(GameObject gameObjectPrefab, Vector3 spawnPosition, Quaternion spawnRotation)
+
+    private GameObject _SpawnedObjectsContainer;
+    private static GameObject _SceneObjectsContainer;
+    private static GameObject _InGameObjectsContainer;
+
+    public enum ObjectPoolType
+    {
+        SceneObjects,
+        InGameObjects
+    }
+
+    private void Awake()
+    {
+        // Create the main container for all spawned objects to organize the hierarchy
+        _SpawnedObjectsContainer = new GameObject("SpawnedObjectsContainer");
+
+        _SceneObjectsContainer = new GameObject("SceneObjectsContainer");
+        _SceneObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
+
+        _InGameObjectsContainer = new GameObject("InGameObjectsContainer");
+        _InGameObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
+    }
+
+    public static GameObject SpawnPooledObject(GameObject gameObjectPrefab, Vector3 spawnPosition, Quaternion spawnRotation, ObjectPoolType objectPoolType)
     {
         // Check if the pool for this prefab exists with the lookup string and prefab name
         PooledObjectsInfo poolInfo = ObjectPools.Find(pool => pool.lookupString == gameObjectPrefab.name);
@@ -25,7 +48,15 @@ public class ObjectPoolManager : MonoBehaviour
         // If there are inactive objects, create a new one
         if (spawnableObject == null)
         {
+            // Find the parent object based on the pool type
+            GameObject parentObject = SetParentObject(objectPoolType);
+            // Instantiate a new object from the prefab
             spawnableObject = Instantiate(gameObjectPrefab, spawnPosition, spawnRotation);
+            // If the parent object is not null, set it as the parent of the new object
+            if (parentObject != null)
+            {
+                spawnableObject.transform.SetParent(parentObject.transform);
+            }
         }
         else
         {
@@ -60,6 +91,20 @@ public class ObjectPoolManager : MonoBehaviour
             poolInfo.inactiveObjects.Add(gameObjectPrefab);
         }
 
+    }
+
+    private static GameObject SetParentObject(ObjectPoolType objectPoolType)
+    {
+        switch (objectPoolType)
+        {
+            case ObjectPoolType.SceneObjects:
+                return _SceneObjectsContainer;
+            case ObjectPoolType.InGameObjects:
+                return _InGameObjectsContainer;
+            default:
+                Debug.LogError("Invalid ObjectPoolType specified.");
+                return null;
+        }
     }
 }
 
