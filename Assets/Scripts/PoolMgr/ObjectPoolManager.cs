@@ -10,11 +10,13 @@ public class ObjectPoolManager : MonoBehaviour
     private GameObject _SpawnedObjectsContainer;
     private static GameObject _SceneObjectsContainer;
     private static GameObject _InGameObjectsContainer;
+    private static GameObject _PlayerObjectsContainer;
 
     public enum ObjectPoolType
     {
         SceneObjects,
-        InGameObjects
+        InGameObjects,
+        PlayerObject
     }
 
     private void Awake()
@@ -27,6 +29,9 @@ public class ObjectPoolManager : MonoBehaviour
 
         _InGameObjectsContainer = new GameObject("InGameObjectsContainer");
         _InGameObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
+
+        _PlayerObjectsContainer = new GameObject("PlayerObjectsContainer");
+        _PlayerObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
     }
 
     public static GameObject SpawnPooledObject(GameObject gameObjectPrefab, Vector3 spawnPosition, Quaternion spawnRotation, ObjectPoolType objectPoolType)
@@ -90,7 +95,6 @@ public class ObjectPoolManager : MonoBehaviour
             gameObjectPrefab.SetActive(false);
             poolInfo.inactiveObjects.Add(gameObjectPrefab);
         }
-
     }
 
     private static GameObject SetParentObject(ObjectPoolType objectPoolType)
@@ -101,6 +105,8 @@ public class ObjectPoolManager : MonoBehaviour
                 return _SceneObjectsContainer;
             case ObjectPoolType.InGameObjects:
                 return _InGameObjectsContainer;
+            case ObjectPoolType.PlayerObject:
+                return _PlayerObjectsContainer;
             default:
                 Debug.LogError("Invalid ObjectPoolType specified.");
                 return null;
