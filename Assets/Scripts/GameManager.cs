@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] private List<MenuPokerCard> pokerCards;
+    [SerializeField] private Animator animator;
 
     [Header("Current Game State")]
     public MenuState menuState;
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
                 card.gameObject.SetActive(card.TargetMenuState != MenuState.Null);
             }
             else
-            {
+            {    
                 card.gameObject.SetActive(card.TargetGameMode != GameMode.Null);
             }
         }
