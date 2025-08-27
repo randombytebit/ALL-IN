@@ -17,8 +17,23 @@ public class SingleGameManager : MonoBehaviour
     }
     private IEnumerator InitializeManagers()
     {
+        Debug.Log("Starting to initialize managers");
         // Wait one frame to ensure all Awake methods are called before initializing managers
         yield return null;
+
+        if (!ObjectPoolManager.Instance)
+        {
+            Debug.LogError("ObjectPoolManager not found in scene!");
+            yield break;
+        }
+
+        // Verify prefabs are assigned
+        if (!_playerManagerPrefab || !_DeckManagerPrefab || !_PokerLogicManagerPrefab || 
+            !_TurnManagerPrefab || !_BettingManagerPrefab || !_RoundManagerPrefab || !_TutorialManagerPrefab)
+        {
+            Debug.LogError("One or more manager prefabs not assigned in SingleGameManager!");
+            yield break;
+        }
 
         // Initialize all single player mode managers
         ObjectPoolManager.SpawnPooledObject(_playerManagerPrefab, Vector3.zero, Quaternion.identity, ObjectPoolManager.ObjectPoolType.ManagerObject);

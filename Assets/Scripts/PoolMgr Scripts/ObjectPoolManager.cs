@@ -5,6 +5,7 @@ using System.Linq;
 
 public class ObjectPoolManager : MonoBehaviour
 {
+    public static ObjectPoolManager Instance { get;  private set; }
     public static List<PooledObjectsInfo> ObjectPools = new List<PooledObjectsInfo>();
 
     private GameObject _SpawnedObjectsContainer;
@@ -23,21 +24,27 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void Awake()
     {
-        // Create the main container for all spawned objects to organize the hierarchy
-        _SpawnedObjectsContainer = new GameObject("SpawnedObjectsContainer");
+        if (Instance == null)
+        {
+            Instance = this;
+            // Create the main container for all spawned objects to organize the hierarchy
+            _SpawnedObjectsContainer = new GameObject("SpawnedObjectsContainer");
 
-        _SceneObjectsContainer = new GameObject("SceneObjectsContainer");
-        _SceneObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
+            _SceneObjectsContainer = new GameObject("SceneObjectsContainer");
+            _SceneObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
 
-        _InGameObjectsContainer = new GameObject("InGameObjectsContainer");
-        _InGameObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
+            _InGameObjectsContainer = new GameObject("InGameObjectsContainer");
+            _InGameObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
 
-        _PlayerObjectsContainer = new GameObject("PlayerObjectsContainer");
-        _PlayerObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
+            _PlayerObjectsContainer = new GameObject("PlayerObjectsContainer");
+            _PlayerObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
 
-        _ManagerObjectsContainer = new GameObject("ManagerObjectsContainer");
-        _ManagerObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
-
+            _ManagerObjectsContainer = new GameObject("ManagerObjectsContainer");
+            _ManagerObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
+        } else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public static GameObject SpawnPooledObject(GameObject gameObjectPrefab, Vector3 spawnPosition, Quaternion spawnRotation, ObjectPoolType objectPoolType)
@@ -63,11 +70,17 @@ public class ObjectPoolManager : MonoBehaviour
             GameObject parentObject = SetParentObject(objectPoolType);
             // Instantiate a new object from the prefab
             spawnableObject = Instantiate(gameObjectPrefab, spawnPosition, spawnRotation);
+
+            // Ensure the object is active after instantiation
+            spawnableObject.SetActive(false);
             // If the parent object is not null, set it as the parent of the new object
             if (parentObject != null)
             {
                 spawnableObject.transform.SetParent(parentObject.transform);
             }
+
+            // Activate the object
+            spawnableObject.SetActive(true);
         }
         else
         {

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6092378483575490963
+--- !u!1 &6127173129879500771
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2919838346511718618}
-  - component: {fileID: 2490957218857070900}
+  - component: {fileID: 8747364342610457201}
+  - component: {fileID: 4580349558763353497}
   m_Layer: 0
   m_Name: SingleGameManagerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2919838346511718618
+  m_IsActive: 0
+--- !u!4 &8747364342610457201
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6092378483575490963}
+  m_GameObject: {fileID: 6127173129879500771}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.94003564, y: -0.687229, z: -0.16111425}
@@ -32,29 +32,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2490957218857070900
+--- !u!114 &4580349558763353497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6092378483575490963}
+  m_GameObject: {fileID: 6127173129879500771}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9eb029d1e7591de4693cdd28ee098b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerManagerPrefab: {fileID: 5539992140134126884, guid: e61e54b1648d34adc80e90fcf68abd51,
+  _playerManagerPrefab: {fileID: 8106597962036387219, guid: e61e54b1648d34adc80e90fcf68abd51,
     type: 3}
-  _DeckManagerPrefab: {fileID: 5612827951787190419, guid: 02565f7aa3c2d4d9dacb834874031e5d,
+  _DeckManagerPrefab: {fileID: 3100762059401228639, guid: 15552dc919a7e4d508b9bc6e120b159d,
     type: 3}
-  _PokerLogicManagerPrefab: {fileID: 2477720158444130416, guid: 549ed256f1ef1474d92f21242fd7e188,
+  _PokerLogicManagerPrefab: {fileID: 2366060797430899836, guid: 549ed256f1ef1474d92f21242fd7e188,
     type: 3}
-  _TurnManagerPrefab: {fileID: 8517296351572964558, guid: 3d4080f2aa9744f36bfb69309b1daa3a,
+  _TurnManagerPrefab: {fileID: 1463040893259838685, guid: 3d4080f2aa9744f36bfb69309b1daa3a,
     type: 3}
-  _BettingManagerPrefab: {fileID: 5419632990654112868, guid: 98cfa0f4f2dc84cba9f017f53eb4f62a,
+  _BettingManagerPrefab: {fileID: 2530587964996930675, guid: 98cfa0f4f2dc84cba9f017f53eb4f62a,
     type: 3}
-  _RoundManagerPrefab: {fileID: 6890653539677364184, guid: 39c30c4ced8f34e36b5e09d75de56489,
+  _RoundManagerPrefab: {fileID: 1085868488162531774, guid: 39c30c4ced8f34e36b5e09d75de56489,
     type: 3}
-  _TutorialManagerPrefab: {fileID: 5884188525379437856, guid: 94ca7ecec662041278c666e342d76689,
+  _TutorialManagerPrefab: {fileID: 7709357938129943559, guid: 94ca7ecec662041278c666e342d76689,
     type: 3}
