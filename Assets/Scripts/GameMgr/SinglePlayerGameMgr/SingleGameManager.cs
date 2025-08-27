@@ -11,9 +11,15 @@ public class SingleGameManager : MonoBehaviour
     [SerializeField] private GameObject _BettingManagerPrefab;
     [SerializeField] private GameObject _RoundManagerPrefab;
     [SerializeField] private GameObject _TutorialManagerPrefab;
-
-    public void InitializeManagers()
+    public void Start()
     {
+        StartCoroutine(InitializeManagers());
+    }
+    private IEnumerator InitializeManagers()
+    {
+        // Wait one frame to ensure all Awake methods are called before initializing managers
+        yield return null;
+
         // Initialize all single player mode managers
         ObjectPoolManager.SpawnPooledObject(_playerManagerPrefab, Vector3.zero, Quaternion.identity, ObjectPoolManager.ObjectPoolType.ManagerObject);
         ObjectPoolManager.SpawnPooledObject(_DeckManagerPrefab, Vector3.zero, Quaternion.identity, ObjectPoolManager.ObjectPoolType.ManagerObject);
