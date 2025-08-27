@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] private List<MenuPokerCard> pokerCards;
-    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject _singleGameManagerPrefab;
 
     [Header("Current Game State")]
     public MenuState menuState;
@@ -101,16 +101,13 @@ public class GameManager : MonoBehaviour
         switch (selectedGameMode)
         {
             case GameMode.Casual:
-                CasualGameModeController.Instance.StartGame();
                 break;
             case GameMode.Ranked:
-                RankedGameModeController.Instance.StartGame();
                 break;
             case GameMode.PrivateLobby:
-                PrivateLobbyGameModeController.Instance.StartGame();
                 break;
             case GameMode.Tutorial:
-                TutorialGameModeController.Instance.StartGame();
+                ObjectPoolManager.SpawnPooledObject(_singleGameManagerPrefab, Vector3.zero, Quaternion.identity, ObjectPoolManager.ObjectPoolType.ManagerObject);
                 break;
         }
     }
