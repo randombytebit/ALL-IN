@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    public async Task Initialize()
     {
         Application.targetFrameRate = 60;
         Cursor.visible = false;
@@ -44,6 +45,12 @@ public class GameManager : MonoBehaviour
                 card.gameObject.SetActive(false);
             }
         }
+
+        await Task.CompletedTask;
+    }
+
+    void Start()
+    {
     }
 
     public void SetMenuState(MenuState newState)

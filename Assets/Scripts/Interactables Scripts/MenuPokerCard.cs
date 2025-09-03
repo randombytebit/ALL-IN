@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public enum MenuState
 {
@@ -29,10 +30,14 @@ public class MenuPokerCard : Interactable
     [Header("Game State Configuration")]
     [SerializeField] private MenuState targetMenuState;
     [SerializeField] private GameMode targetGameMode;
-
-    // public getters for external access
     public MenuState TargetMenuState => targetMenuState;
     public GameMode TargetGameMode => targetGameMode;
+
+    public async Task Initialize()
+    {
+        
+        await Task.CompletedTask;
+    }
 
     protected override void Interact()
     {
@@ -56,5 +61,10 @@ public class MenuPokerCard : Interactable
         Vector3 cardPosition = transform.position;
         textMeshPro.transform.position = cardPosition + new Vector3(0.75f, 0, 0.5f);
         Debug.Log(textMeshPro.transform.position);
+    }
+
+    public void SetTextMeshPro(TextMeshPro tmp)
+    {
+        textMeshPro = tmp;
     }
 }

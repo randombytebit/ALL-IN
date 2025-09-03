@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private PlayerInput playerInput;
-    private PlayerLook playerLook;
+    private PlayerSetting playerSetting;
     private PlayerInput.OnFootActions onFoot;
     private PlayerInput.InGameActions inGame;
 
@@ -16,15 +16,25 @@ public class InputManager : MonoBehaviour
         onFoot = playerInput.onFoot;
         inGame = playerInput.inGame;
 
-        playerLook = GetComponent<PlayerLook>();
+        playerSetting = GetComponent<PlayerSetting>(); 
         
+        if (playerSetting == null)
+        {
+            Debug.LogError("PlayerSetting component not found on " + gameObject.name);
+            enabled = false;
+            return;
+        }
     }
 
     void LateUpdate()
     {
-        playerLook.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+        if (playerSetting != null)
+        {
+            playerSetting.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+        }
     }
-        private void OnEnable()
+
+    private void OnEnable()
     {
         onFoot.Enable();
     }
