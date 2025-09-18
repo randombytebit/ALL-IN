@@ -43,7 +43,7 @@ public class TutorialInitiator : MonoBehaviour
     private void Start()
     {
         Debug.Log("TutorialInitiator Start called");
-        StartCoroutine(DelayedStart());
+        // StartCoroutine(DelayedStart());
     }
 
     private IEnumerator DelayedStart()
@@ -78,6 +78,12 @@ public class TutorialInitiator : MonoBehaviour
     private async void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log($"OnSceneLoaded: {scene.name} with mode: {mode}");
+
+        if (_hasInitialized)
+        {
+            Debug.Log("Objects already initialized, skipping initialization");
+            return;
+        }
 
         // Check if ObjectPoolManager already exists
         if (ObjectPoolManager.Instance == null)
