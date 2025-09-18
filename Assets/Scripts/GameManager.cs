@@ -3,21 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] private List<MenuPokerCard> pokerCards;
-    [SerializeField] private GameObject _singleGameManagerPrefab;
 
     [Header("Current Game State")]
     public MenuState menuState;
     private GameMode selectedGameMode;
+    private string currentScene;
 
     public System.Action<MenuState> OnMenuStateChanged;
 
     void Awake()
     {
+        currentScene = SceneManager.GetActiveScene().name;
         if (Instance == null)
         {
             Instance = this;
@@ -35,14 +37,17 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        pokerCards = new List<MenuPokerCard>(FindObjectsOfType<MenuPokerCard>(true));
+        pokerCards = new List<MenuPokerCard>(FindObjectsOfType<MenuPokerCard>());
 
-        // Initialize GameModeCards as inactive
         foreach (MenuPokerCard card in pokerCards)
         {
-            if (card.TargetGameMode != GameMode.Null)
+            if (card.TargetMenuState == MenuState.Null)
             {
-                card.gameObject.SetActive(false);
+                card.gameObject.active = false;
+            }
+            else
+            {
+                card.gameObject.active = true;
             }
         }
 
@@ -114,9 +119,30 @@ public class GameManager : MonoBehaviour
             case GameMode.PrivateLobby:
                 break;
             case GameMode.Tutorial:
-                ObjectPoolManager.SpawnPooledObject(_singleGameManagerPrefab, Vector3.zero, Quaternion.identity, ObjectPoolManager.ObjectPoolType.ManagerObject);
+                StartCoroutine(LoadNewScene("TutorialScene"));
                 break;
         }
+    }
+
+    private IEnumerator LoadNewScene(string sceneName)
+    {
+        Debug.Log("Loading scene: " + sceneName);
+        
+        // Clear existing pooled objects
+        ObjectPoolManager.ClearAllPools();
+        
+        // Load new scene
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        
+        while (!loadOperation.isDone)
+        {
+            yield return null;
+        }
+
+        // Update current scene reference
+        currentScene = sceneName;
+        
+        Debug.Log($"Scene {sceneName} loaded successfully");
     }
 
     public void QuitGame()

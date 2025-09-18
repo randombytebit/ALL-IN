@@ -34,8 +34,7 @@ public class MenuPokerCard : Interactable
     public GameMode TargetGameMode => targetGameMode;
 
     public async Task Initialize()
-    {
-        
+    {   
         await Task.CompletedTask;
     }
 

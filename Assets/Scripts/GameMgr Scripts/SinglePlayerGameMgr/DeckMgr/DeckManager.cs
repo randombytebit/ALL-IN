@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
+using System;
 
 public enum Suits
 {
@@ -26,16 +28,17 @@ public class DeckManager : MonoBehaviour
 
     private int _specialCardsCount;
 
-    private void Start()
+    public async Task Initialize()
     {
-        StartCoroutine(InitializeDeck());
+        Debug.Log("DeckManager initialized");
+        await InitializeDeck();
     }
 
-    private IEnumerator InitializeDeck()
+    private async Task InitializeDeck()
     {
-        yield return null;
+        await Task.Yield();
 
-        foreach (Suits suit in System.Enum.GetValues(typeof(Suits)))
+        foreach (Suits suit in Enum.GetValues(typeof(Suits)))
         {
             for (int value = 10; value <= 14; value++)
             {
@@ -50,7 +53,7 @@ public class DeckManager : MonoBehaviour
         for (int i = 0; i < _deck.Count; i++)
         {
             var temp = _deck[i];
-            int randomIndex = Random.Range(0, _deck.Count);
+            int randomIndex = UnityEngine.Random.Range(0, _deck.Count);
             _deck[i] = _deck[randomIndex];
             _deck[randomIndex] = temp;
         }

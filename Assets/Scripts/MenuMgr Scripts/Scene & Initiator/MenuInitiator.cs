@@ -14,6 +14,7 @@ public class MenuInitiator : MonoBehaviour
     [SerializeField] private List<GameObject> _menuPokerCardPrefabs;
 
     // References to instantiated objects
+    private GameObject _objectPoolManager;
     private GameManager _gameManager;
     private PlayerSetting _player;
     private float _pokercardXOrigin = -1.25f;
@@ -21,25 +22,22 @@ public class MenuInitiator : MonoBehaviour
 
     private async void Start()
     {
-        _objectPoolManagerPrefab = Instantiate(_objectPoolManagerPrefab);
+        if (ObjectPoolManager.Instance == null)
+        {
+            Debug.Log("Creating new ObjectPoolManager from MenuInitiator");
+            _objectPoolManager = Instantiate(_objectPoolManagerPrefab);
+            DontDestroyOnLoad(_objectPoolManager);
+            await Task.Yield();
+        } else {
+            Debug.Log("ObjectPoolManager already exists, using existing instance");
+        }
+
         await InitializeObjects();
         // _loadingScene.show();
     }
 
     private async Task InitializeObjects()
     {
-        // Spawn and get reference to GameManager
-        GameObject gameManagerObj = ObjectPoolManager.SpawnPooledObject(_gameManagerPrefab,
-            Vector3.zero,
-            Quaternion.identity,
-            ObjectPoolManager.ObjectPoolType.ManagerObject);
-        _gameManager = gameManagerObj.GetComponent<GameManager>();
-
-        if (_gameManager != null)
-        {
-            await _gameManager.Initialize();
-        }
-
         // Spawn and get reference to Player
         GameObject playerObj = ObjectPoolManager.SpawnPooledObject(_playerPrefab,
             new Vector3(-0.02f, 2.58f, -5.21f),
@@ -58,6 +56,7 @@ public class MenuInitiator : MonoBehaviour
             Quaternion.Euler(60f, 0f, 0f),
             ObjectPoolManager.ObjectPoolType.ManagerObject);
 
+        // Spawn and get reference to TextMeshPro
         GameObject textMeshObj = ObjectPoolManager.SpawnPooledObject(_textMeshProPrefab,
             Vector3.zero,
             Quaternion.Euler(90f, 0f, 0f),
@@ -78,9 +77,21 @@ public class MenuInitiator : MonoBehaviour
             {
                 // Set the TextMeshPro component reference on the MenuPokerCard
                 menuPokerCard.SetTextMeshPro(textMeshComponent);
-                
+
                 await menuPokerCard.Initialize();
             }
+        }
+        
+        // Spawn and get reference to GameManager
+        GameObject gameManagerObj = ObjectPoolManager.SpawnPooledObject(_gameManagerPrefab,
+            Vector3.zero,
+            Quaternion.identity,
+            ObjectPoolManager.ObjectPoolType.ManagerObject);
+        _gameManager = gameManagerObj.GetComponent<GameManager>();
+
+        if (_gameManager != null)
+        {
+            await _gameManager.Initialize();
         }
     }
 }
