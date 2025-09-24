@@ -27,8 +27,22 @@ public class ObjectPoolManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // Create the main container for all spawned objects to organize the hierarchy
+            DontDestroyOnLoad(gameObject);  // Add this line
+            InitializeContainers();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void InitializeContainers()
+    {
+        // Create containers only if they don't exist
+        if (_SpawnedObjectsContainer == null)
+        {
             _SpawnedObjectsContainer = new GameObject("SpawnedObjectsContainer");
+            DontDestroyOnLoad(_SpawnedObjectsContainer);
 
             _SceneObjectsContainer = new GameObject("SceneObjectsContainer");
             _SceneObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
@@ -41,9 +55,6 @@ public class ObjectPoolManager : MonoBehaviour
 
             _ManagerObjectsContainer = new GameObject("ManagerObjectsContainer");
             _ManagerObjectsContainer.transform.SetParent(_SpawnedObjectsContainer.transform);
-        } else
-        {
-            Destroy(gameObject);
         }
     }
 
@@ -132,6 +143,23 @@ public class ObjectPoolManager : MonoBehaviour
                 Debug.LogError("Invalid ObjectPoolType specified.");
                 return null;
         }
+    }
+
+    public static void ClearAllPools()
+    {
+        ObjectPools.Clear();
+        if (_SceneObjectsContainer != null) 
+            foreach (Transform child in _SceneObjectsContainer.transform) 
+                Destroy(child.gameObject);
+        if (_InGameObjectsContainer != null)
+            foreach (Transform child in _InGameObjectsContainer.transform) 
+                Destroy(child.gameObject);
+        if (_PlayerObjectsContainer != null)
+            foreach (Transform child in _PlayerObjectsContainer.transform) 
+                Destroy(child.gameObject);
+        if (_ManagerObjectsContainer != null)
+            foreach (Transform child in _ManagerObjectsContainer.transform) 
+                Destroy(child.gameObject);
     }
 }
 
