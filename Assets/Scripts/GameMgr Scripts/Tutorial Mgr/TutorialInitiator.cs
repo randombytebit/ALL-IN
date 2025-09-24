@@ -16,6 +16,7 @@ public class TutorialInitiator : MonoBehaviour
     [SerializeField] private GameObject _BettingManagerPrefab;
     [SerializeField] private GameObject _RoundManagerPrefab;
     [SerializeField] private GameObject _TutorialManagerPrefab;
+    [SerializeField] private GameObject _settingsCanvas;
     private GameObject _objectPoolManager;
     private PlayerSetting _player;
     private PlayerManager _playerManager;
@@ -45,13 +46,32 @@ public class TutorialInitiator : MonoBehaviour
         Debug.Log("TutorialInitiator Start called");
         // StartCoroutine(DelayedStart());
     }
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_settingsCanvas != null)
+            {
+                bool isActive = _settingsCanvas.activeSelf;
+                _settingsCanvas.SetActive(!isActive);
+            }
+
+            // Cursor visibility and lock state
+            Cursor.visible = _settingsCanvas.activeSelf;
+            Cursor.lockState = _settingsCanvas.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+
+            // Freeze the timer
+            Time.timeScale = _settingsCanvas.activeSelf ? 0f : 1f;
+        }
+    }
 
     private IEnumerator DelayedStart()
     {
         // Wait for two frames to ensure scene is fully loaded
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        
+
         if (!_hasInitialized)
         {
             _hasInitialized = true;

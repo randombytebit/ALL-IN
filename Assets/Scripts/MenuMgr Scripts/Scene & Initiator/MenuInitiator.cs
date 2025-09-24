@@ -11,6 +11,7 @@ public class MenuInitiator : MonoBehaviour
     [SerializeField] private GameObject _objectPoolManagerPrefab;
     [SerializeField] private GameObject _directionalLightPrefab;
     [SerializeField] private GameObject _textMeshProPrefab;
+    [SerializeField] private GameObject _settingsCanvas;
     [SerializeField] private List<GameObject> _menuPokerCardPrefabs;
 
     // References to instantiated objects
@@ -34,6 +35,25 @@ public class MenuInitiator : MonoBehaviour
 
         await InitializeObjects();
         // _loadingScene.show();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_settingsCanvas != null)
+            {
+                bool isActive = _settingsCanvas.activeSelf;
+                _settingsCanvas.SetActive(!isActive);
+            }
+
+            // Cursor visibility and lock state
+            Cursor.visible = _settingsCanvas.activeSelf;
+            Cursor.lockState = _settingsCanvas.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+
+            // Freeze the timer
+            Time.timeScale = _settingsCanvas.activeSelf ? 0f : 1f;
+        }
     }
 
     private async Task InitializeObjects()
@@ -81,7 +101,7 @@ public class MenuInitiator : MonoBehaviour
                 await menuPokerCard.Initialize();
             }
         }
-        
+
         // Spawn and get reference to GameManager
         GameObject gameManagerObj = ObjectPoolManager.SpawnPooledObject(_gameManagerPrefab,
             Vector3.zero,

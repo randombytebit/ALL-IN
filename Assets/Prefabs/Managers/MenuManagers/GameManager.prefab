@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pokerCards: []
-  _singleGameManagerPrefab: {fileID: 6127173129879500771, guid: 723574dd1e1fa4566880d0902c19cf06,
+  SettingsCanvas: {fileID: 5865868749980920733, guid: 386546d56df624bacaef859eb2bad282,
     type: 3}
   menuState: 0
