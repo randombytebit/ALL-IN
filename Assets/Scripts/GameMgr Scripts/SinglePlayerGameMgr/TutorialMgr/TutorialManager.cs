@@ -15,4 +15,9 @@ public class TutorialManager : MonoBehaviour
 
         await Task.CompletedTask;
     }
+
+    public void TutorialStart()
+    {
+        Debug.Log("Tutorial Started");
+    }
 }
