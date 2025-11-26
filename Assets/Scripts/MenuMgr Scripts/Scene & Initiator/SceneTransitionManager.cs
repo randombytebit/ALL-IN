@@ -1,26 +1,58 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
+using System.Threading.Tasks;
 
 public class SceneTransitionManager : MonoBehaviour
 {
-    private string currentScene;
+    [Header("Transition Settings")]
+    [SerializeField] private string _targetSceneName = "MenuScene";
+    [SerializeField] private bool _unloadCurrentScene = true;
+    [SerializeField] private bool _setAsActiveScene = true;
 
-    void Awake()
+    private void Start()
     {
-        currentScene = SceneManager.GetActiveScene().name;
-    }
-    void Start()
-    {
-        StartCoroutine(LoadNewScene());
+        _ = TransitionToSceneAsync(); // Fire and forget
     }
 
-    private IEnumerator LoadNewScene()
+    private async Task TransitionToSceneAsync()
     {
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
-        yield return loadOperation;
-        Scene newScene = SceneManager.GetSceneByName("MenuScene");
-        SceneManager.SetActiveScene(newScene);
-        SceneManager.UnloadSceneAsync(currentScene);
+        string currentScene = SceneManager.GetActiveScene().name;
+        Debug.Log($"[SceneTransition] Loading '{_targetSceneName}' from '{currentScene}'");
+
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(_targetSceneName, LoadSceneMode.Additive);
+        if (loadOp == null)
+        {
+            Debug.LogError($"[SceneTransition] Failed to load scene: {_targetSceneName}");
+            return;
+        }
+
+
+        while (!loadOp.isDone)
+            await Task.Yield();
+
+
+        Scene targetScene = SceneManager.GetSceneByName(_targetSceneName);
+        if (!targetScene.IsValid())
+        {
+            Debug.LogError($"[SceneTransition] Loaded scene not valid: {_targetSceneName}");
+            return;
+        }
+
+        if (_setAsActiveScene)
+        {
+            SceneManager.SetActiveScene(targetScene);
+            Debug.Log($"[SceneTransition] Active scene: {_targetSceneName}");
+        }
+
+        if (_unloadCurrentScene)
+        {
+            AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(currentScene);
+            if (unloadOp != null)
+            {
+                while (!unloadOp.isDone)
+                    await Task.Yield();
+                Debug.Log($"[SceneTransition] Unloaded: {currentScene}");
+            }
+        }
     }
 }

@@ -24,10 +24,6 @@ public class PlayerSetting : MonoBehaviour
 
         await Task.CompletedTask;
     }
-    
-    void Start()
-    {
-    }
 
     void OnEnable()
     {

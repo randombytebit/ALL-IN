@@ -59,7 +59,6 @@ public class MenuPokerCard : Interactable
 
         Vector3 cardPosition = transform.position;
         textMeshPro.transform.position = cardPosition + new Vector3(0.75f, 0, 0.5f);
-        Debug.Log(textMeshPro.transform.position);
     }
 
     public void SetTextMeshPro(TextMeshPro tmp)

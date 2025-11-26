@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7059303506695590169}
   - component: {fileID: 1725015167852514235}
   - component: {fileID: 346963193424784117}
-  - component: {fileID: 3656196472395686382}
   m_Layer: 6
   m_Name: Appearance
   m_TagString: Untagged
@@ -125,15 +124,3 @@ MonoBehaviour:
   pokerCardMessage: APPEARANCE
   targetMenuState: 2
   targetGameMode: 0
---- !u!114 &3656196472395686382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3043581015924424224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e67702e2ddec470db70aface068e24a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -1,117 +1,130 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 
 public class MenuInitiator : MonoBehaviour
 {
-    [SerializeField] private GameObject _gameManagerPrefab;
-    [SerializeField] private GameObject _playerPrefab;
+    [Header("=== Prefabs to Spawn ===")]
     [SerializeField] private GameObject _objectPoolManagerPrefab;
+    [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private GameObject _directionalLightPrefab;
     [SerializeField] private GameObject _textMeshProPrefab;
-    [SerializeField] private GameObject _settingsCanvas;
+    [SerializeField] private GameObject _gameManagerPrefab;
     [SerializeField] private List<GameObject> _menuPokerCardPrefabs;
 
-    // References to instantiated objects
-    private GameObject _objectPoolManager;
-    private GameManager _gameManager;
-    private PlayerSetting _player;
-    private float _pokercardXOrigin = -1.25f;
+    private PlayerInput _inputActions;
+    private bool _hasInitialized = false;
+    private float _cardXOffset = -1.25f;
 
-
-    private async void Start()
+    private void OnEnable()
     {
-        if (ObjectPoolManager.Instance == null)
-        {
-            Debug.Log("Creating new ObjectPoolManager from MenuInitiator");
-            _objectPoolManager = Instantiate(_objectPoolManagerPrefab);
-            DontDestroyOnLoad(_objectPoolManager);
-            await Task.Yield();
-        } else {
-            Debug.Log("ObjectPoolManager already exists, using existing instance");
-        }
+        Debug.Log("[MenuInit] OnEnable");
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
-        await InitializeObjects();
-        // _loadingScene.show();
+        _inputActions = new PlayerInput();
+        _inputActions.UI.SettingsToggle.performed += OnSettingsToggle;
+        _inputActions.UI.Enable();
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        Debug.Log("[MenuInit] OnDisable");
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        if (_inputActions != null)
         {
-            if (_settingsCanvas != null)
-            {
-                bool isActive = _settingsCanvas.activeSelf;
-                _settingsCanvas.SetActive(!isActive);
-            }
-
-            // Cursor visibility and lock state
-            Cursor.visible = _settingsCanvas.activeSelf;
-            Cursor.lockState = _settingsCanvas.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
-
-            // Freeze the timer
-            Time.timeScale = _settingsCanvas.activeSelf ? 0f : 1f;
+            _inputActions.UI.SettingsToggle.performed -= OnSettingsToggle;
+            _inputActions.UI.Disable();
+            _inputActions.Dispose();
         }
     }
 
-    private async Task InitializeObjects()
+    private void OnSettingsToggle(InputAction.CallbackContext context)
     {
-        // Spawn and get reference to Player
-        GameObject playerObj = ObjectPoolManager.SpawnPooledObject(_playerPrefab,
-            new Vector3(-0.02f, 2.58f, -5.21f),
-            Quaternion.identity,
-            ObjectPoolManager.ObjectPoolType.PlayerObject);
-        _player = playerObj.GetComponent<PlayerSetting>();
+        if (SettingsPanelController.Instance == null) return;
 
-        if (_player != null)
+        if (SettingsPanelController.Instance.IsOpen())
         {
-            await _player.Initialize();
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            SettingsPanelController.Instance.CloseSettings();
         }
-
-        // Set up lighting
-        GameObject lightObj = ObjectPoolManager.SpawnPooledObject(_directionalLightPrefab,
-            new Vector3(0.77f, 13.21f, 1.37f),
-            Quaternion.Euler(60f, 0f, 0f),
-            ObjectPoolManager.ObjectPoolType.ManagerObject);
-
-        // Spawn and get reference to TextMeshPro
-        GameObject textMeshObj = ObjectPoolManager.SpawnPooledObject(_textMeshProPrefab,
-            Vector3.zero,
-            Quaternion.Euler(90f, 0f, 0f),
-            ObjectPoolManager.ObjectPoolType.ManagerObject);
-        TextMeshPro textMeshComponent = textMeshObj.GetComponent<TextMeshPro>();
-
-        // Spawn MenuPokerCards
-        foreach (GameObject cardPrefab in _menuPokerCardPrefabs)
+        else
         {
-            _pokercardXOrigin += 0.25f;
-            GameObject spawnedCard = ObjectPoolManager.SpawnPooledObject(cardPrefab,
-                new Vector3(_pokercardXOrigin, 2.56f, -0.83f),
-                Quaternion.identity,
-                ObjectPoolManager.ObjectPoolType.ManagerObject);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            SettingsPanelController.Instance.OpenSettings();
+        }
+    }
 
-            // Get the MenuPokerCard component and assign the TextMeshPro
-            if (spawnedCard.TryGetComponent<MenuPokerCard>(out MenuPokerCard menuPokerCard))
+    private async void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (_hasInitialized) return;
+
+        try
+        {
+            if (ObjectPoolManager.Instance == null)
             {
-                // Set the TextMeshPro component reference on the MenuPokerCard
-                menuPokerCard.SetTextMeshPro(textMeshComponent);
-
-                await menuPokerCard.Initialize();
+                GameObject poolObj = Instantiate(_objectPoolManagerPrefab);
+                DontDestroyOnLoad(poolObj);
+                await Task.Yield();
             }
+
+            Spawn(_playerPrefab,           new Vector3(-0.02f, 2.58f, -5.21f), Quaternion.identity,        ObjectPoolManager.ObjectPoolType.PlayerObject);
+            Spawn(_directionalLightPrefab, new Vector3(0.77f, 13.21f, 1.37f),   Quaternion.Euler(60f, 0f, 0f), ObjectPoolManager.ObjectPoolType.ManagerObject);
+
+            GameObject textObj = Spawn(_textMeshProPrefab, Vector3.zero, Quaternion.Euler(90f, 0f, 0f), ObjectPoolManager.ObjectPoolType.ManagerObject);
+            TextMeshPro textMesh = textObj?.GetComponent<TextMeshPro>();
+
+            foreach (GameObject cardPrefab in _menuPokerCardPrefabs)
+            {
+                _cardXOffset += 0.25f;
+                GameObject cardObj = Spawn(cardPrefab, new Vector3(_cardXOffset, 2.56f, -0.83f), Quaternion.identity, ObjectPoolManager.ObjectPoolType.ManagerObject);
+                
+                if (cardObj != null && textMesh != null)
+                {
+                    if (cardObj.TryGetComponent<MenuPokerCard>(out var menuCard))
+                    {
+                        menuCard.SetTextMeshPro(textMesh);
+                        _ = menuCard.Initialize(); // Fire and forget
+                    }
+                }
+            }
+
+            GameObject gmObj = Spawn(_gameManagerPrefab, Vector3.zero, Quaternion.identity, ObjectPoolManager.ObjectPoolType.ManagerObject);
+            if (gmObj != null)
+            {
+                GameManager gm = gmObj.GetComponent<GameManager>();
+                if (gm != null)
+                {
+                    await gm.Initialize();
+                }
+            }
+
+            _hasInitialized = true;
+            Debug.Log("[MenuInit] ALL OBJECTS SPAWNED — GameManager takes control");
         }
-
-        // Spawn and get reference to GameManager
-        GameObject gameManagerObj = ObjectPoolManager.SpawnPooledObject(_gameManagerPrefab,
-            Vector3.zero,
-            Quaternion.identity,
-            ObjectPoolManager.ObjectPoolType.ManagerObject);
-        _gameManager = gameManagerObj.GetComponent<GameManager>();
-
-        if (_gameManager != null)
+        catch (System.Exception ex)
         {
-            await _gameManager.Initialize();
+            Debug.LogError($"[MenuInit] SPAWN FAILED: {ex}");
         }
+    }
+
+    private GameObject Spawn(GameObject prefab, Vector3 pos, Quaternion rot, ObjectPoolManager.ObjectPoolType type)
+    {
+        if (prefab == null)
+        {
+            Debug.LogWarning($"[MenuInit] Missing prefab for {type}");
+            return null;
+        }
+
+        GameObject obj = ObjectPoolManager.SpawnPooledObject(prefab, pos, rot, type);
+        if (obj != null) DontDestroyOnLoad(obj);
+        return obj;
     }
 }

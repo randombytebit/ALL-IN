@@ -43,11 +43,11 @@ public class GameManager : MonoBehaviour
         {
             if (card.TargetMenuState == MenuState.Null)
             {
-                card.gameObject.active = false;
+                card.gameObject.SetActive(false);
             }
             else
             {
-                card.gameObject.active = true;
+                card.gameObject.SetActive(true);
             }
         }
 

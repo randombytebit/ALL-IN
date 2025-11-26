@@ -83,11 +83,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""inGame"",
+            ""name"": ""UI"",
             ""id"": ""b1f851e8-8157-4080-9e0b-a2d443c04606"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""SettingsToggle"",
                     ""type"": ""Button"",
                     ""id"": ""6d198308-03be-492e-ad48-57958960933a"",
                     ""expectedControlType"": """",
@@ -100,11 +100,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ed2ffe77-c9f1-41a2-8484-ea259643f497"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""SettingsToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -117,15 +117,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_onFoot = asset.FindActionMap("onFoot", throwIfNotFound: true);
         m_onFoot_Look = m_onFoot.FindAction("Look", throwIfNotFound: true);
         m_onFoot_Interact = m_onFoot.FindAction("Interact", throwIfNotFound: true);
-        // inGame
-        m_inGame = asset.FindActionMap("inGame", throwIfNotFound: true);
-        m_inGame_Newaction = m_inGame.FindAction("New action", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_SettingsToggle = m_UI.FindAction("SettingsToggle", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_onFoot.enabled, "This will cause a leak and performance issues, PlayerInput.onFoot.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_inGame.enabled, "This will cause a leak and performance issues, PlayerInput.inGame.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInput.UI.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -238,58 +238,58 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     }
     public OnFootActions @onFoot => new OnFootActions(this);
 
-    // inGame
-    private readonly InputActionMap m_inGame;
-    private List<IInGameActions> m_InGameActionsCallbackInterfaces = new List<IInGameActions>();
-    private readonly InputAction m_inGame_Newaction;
-    public struct InGameActions
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_SettingsToggle;
+    public struct UIActions
     {
         private @PlayerInput m_Wrapper;
-        public InGameActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_inGame_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_inGame; }
+        public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SettingsToggle => m_Wrapper.m_UI_SettingsToggle;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InGameActions set) { return set.Get(); }
-        public void AddCallbacks(IInGameActions instance)
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_InGameActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InGameActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @SettingsToggle.started += instance.OnSettingsToggle;
+            @SettingsToggle.performed += instance.OnSettingsToggle;
+            @SettingsToggle.canceled += instance.OnSettingsToggle;
         }
 
-        private void UnregisterCallbacks(IInGameActions instance)
+        private void UnregisterCallbacks(IUIActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @SettingsToggle.started -= instance.OnSettingsToggle;
+            @SettingsToggle.performed -= instance.OnSettingsToggle;
+            @SettingsToggle.canceled -= instance.OnSettingsToggle;
         }
 
-        public void RemoveCallbacks(IInGameActions instance)
+        public void RemoveCallbacks(IUIActions instance)
         {
-            if (m_Wrapper.m_InGameActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IInGameActions instance)
+        public void SetCallbacks(IUIActions instance)
         {
-            foreach (var item in m_Wrapper.m_InGameActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_InGameActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public InGameActions @inGame => new InGameActions(this);
+    public UIActions @UI => new UIActions(this);
     public interface IOnFootActions
     {
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
     }
-    public interface IInGameActions
+    public interface IUIActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnSettingsToggle(InputAction.CallbackContext context);
     }
 }
