@@ -61,11 +61,11 @@
             ]
         },
         {
-            "name": "inGame",
+            "name": "UI",
             "id": "b1f851e8-8157-4080-9e0b-a2d443c04606",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "SettingsToggle",
                     "type": "Button",
                     "id": "6d198308-03be-492e-ad48-57958960933a",
                     "expectedControlType": "",
@@ -78,11 +78,11 @@
                 {
                     "name": "",
                     "id": "ed2ffe77-c9f1-41a2-8484-ea259643f497",
-                    "path": "",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "SettingsToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

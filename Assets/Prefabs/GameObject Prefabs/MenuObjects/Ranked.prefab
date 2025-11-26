@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4875930713994454680}
   - component: {fileID: 377767754747521116}
   - component: {fileID: 7504330863281191955}
-  - component: {fileID: 7162411413613161283}
   m_Layer: 6
   m_Name: Ranked
   m_TagString: Untagged
@@ -125,15 +124,3 @@ MonoBehaviour:
   pokerCardMessage: Ranked
   targetMenuState: 0
   targetGameMode: 2
---- !u!114 &7162411413613161283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1486652397066421581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e67702e2ddec470db70aface068e24a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1383598502229167190}
   - component: {fileID: 3599229956369101874}
   - component: {fileID: 7625641961613662950}
-  - component: {fileID: 2005715560311615040}
   m_Layer: 6
   m_Name: Private Lobby
   m_TagString: Untagged
@@ -125,15 +124,3 @@ MonoBehaviour:
   pokerCardMessage: Private Lobby
   targetMenuState: 0
   targetGameMode: 3
---- !u!114 &2005715560311615040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3047467647666255981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e67702e2ddec470db70aface068e24a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

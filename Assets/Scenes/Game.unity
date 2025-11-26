@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 1790152851}
   - component: {fileID: 1790152852}
   m_Layer: 0
-  m_Name: Scene Manager
+  m_Name: SCENE MANAGER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,6 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517133bae6dd34aedbd538e9a2c7ecd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetSceneName: MenuScene
+  _unloadCurrentScene: 1
+  _setAsActiveScene: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
