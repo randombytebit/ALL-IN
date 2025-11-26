@@ -51,16 +51,9 @@ public class PlayerSetting : MonoBehaviour
     {
         Ray ray = new(playerCamera.transform.position, playerCamera.transform.forward);
 
-        if (Physics.Raycast(ray, out RaycastHit pointInfo, rayDistance, interactableMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, interactableMask))
         {
-            if (pointInfo.collider.GetComponent<Interactable>() == null)
-            {
-                return;
-            }
-
-            Interactable interactable = pointInfo.collider.GetComponent<Interactable>();
-
-            if (interactable.GetComponent<MenuPokerCard>() != null)
+            if (hit.collider.TryGetComponent<Interactable>(out var interactable))
             {
                 interactable.BaseInteract();
             }
