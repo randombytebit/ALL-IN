@@ -1,6 +1,6 @@
 <div align="center">
 
-# [Project Name]
+# ALL-IN
 
 **A 3D story-driven poker game with innovative mechanics, real-time multiplayer, and immersive sound design.**
 
