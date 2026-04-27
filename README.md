@@ -74,6 +74,6 @@ git clone https://github.com/your-username/your-repo-name.git
 
 <div align="center">
 
-ALL-IN · In Development (Project Stop)
+ALL-IN · Development Stop
 
 </div>
